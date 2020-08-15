@@ -1,0 +1,33 @@
+button.button,
+a.button,
+input.button {
+  padding: 15px 20px;
+  background-color: $muted;
+  -webkit-appearance: none;
+  border: 0;
+  width: 50%;
+  align-self: center;
+  transition: all .3s ease-in-out;
+  color: $text;
+  outline: none;
+  text-decoration: none;
+  text-align: center;
+
+  &:hover {
+    cursor: pointer;
+
+    &:hover {
+      background-color: $muted_05;
+    }
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $muted_05;
+
+    &:hover {
+      cursor: not-allowed;
+      background-color: $muted;
+    }
+  }
+}

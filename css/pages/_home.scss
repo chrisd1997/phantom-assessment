@@ -1,0 +1,111 @@
+.page-home {
+  width: 100%;
+  height: 100%;
+  display: none;
+
+  &.active {
+    display: block;
+  }
+
+  header {
+    height: auto;
+    width: 100%;
+    background-color: $gray;
+    padding: 20px;
+    border-radius: 4px;
+  }
+
+  main {
+    margin-top: 40px;
+    width: 100%;
+
+    .table {
+      width: 100%;
+      border-spacing: 0;
+
+      thead tr th {
+        text-align: start;
+        padding: 20px;
+        background-color: $gray;
+        font-weight: 400;
+      }
+
+      tbody tr {
+        &:nth-child(even) {
+          background-color: $muted;
+        }
+
+        td {
+          padding: 20px;
+
+          a {
+            color: $text;
+            transition: color .2s ease-in-out;
+
+            &:hover {
+              color: $text_hover
+            }
+          }
+
+          &:nth-child(2) {
+            text-align: end;
+
+            button {
+              padding: 10px;
+              outline: none;
+              background: transparent;
+              -webkit-appearance: none;
+              border: 0;
+              font-size: 20px;
+              transition: all .2s ease-in-out;
+
+              &:hover {
+                cursor: pointer;
+                color: $text_hover;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    footer {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      border-top: 1px solid $gray;
+      padding-top: 20px;
+
+      .pagination {
+        display: flex;
+        align-items: center;
+
+        .button {
+          width: auto;
+          padding: 10px;
+
+          &:first-child {
+            margin-right: 10px;
+          }
+          &:last-child {
+            margin-left: 10px;
+          }
+        }
+
+        .pagination-items {
+          display: flex;
+
+          a {
+            display: block;
+            width: 30px;
+            text-align: center;
+            color: $text;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+}

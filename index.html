@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Phantom Assessment</title>
+
+        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="css/all.min.css">
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="page-home active">
+                <header>
+                    <form method="post" id="add-form">
+                        <div class="form-group">
+                            <label for="url">URL</label>
+                            <input
+                                    type="url"
+                                    id="url"
+                                    placeholder="https://example.com"
+                                    onblur="validateField(this); this.setAttribute('data-mode', 'new'); this.setAttribute('data-edit-id', '')"
+                                    onkeyup="validateField(this)"
+                                    data-mode="new"
+                            />
+                            <span class="error-field"></span>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="button" disabled>Save</button>
+                        </div>
+                    </form>
+                </header>
+                <main>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>URL</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <footer>
+                        <span id="counter"></span>
+                        <div class="pagination">
+                            <a id="prevPage" class="button">
+                                <i class="fal fa-chevron-left"></i>
+                            </a>
+                            <div class="pagination-items"></div>
+                            <a id="nextPage" class="button">
+                                <i class="fal fa-chevron-right"></i>
+                            </a>
+                        </div>
+                    </footer>
+                </main>
+            </div>
+            <div class="page-complete">
+                <h2>Thanks for your submission!</h2>
+                <p id="bookmark-submission"></p>
+
+                <div class="actions">
+                    <a href="/" class="button">
+                        Back to listings
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <script src="app.js"></script>
+    </body>
+</html>

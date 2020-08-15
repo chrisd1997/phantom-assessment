@@ -1,0 +1,203 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  height: 100%;
+}
+
+form .form-group {
+  display: flex;
+  flex-direction: column;
+}
+form .form-group:not(:last-child) {
+  margin-bottom: 30px;
+}
+form .form-group label {
+  margin-bottom: 10px;
+}
+form .form-group input {
+  padding: 10px 15px;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #e5e5e5;
+  transition: border 0.3s ease-in-out;
+  outline: none;
+}
+form .form-group input:focus {
+  border: 1px solid #000;
+}
+form .form-group input.error {
+  border: 1px solid #db1717;
+}
+form .form-group .error-field {
+  font-size: 12px;
+  color: #db1717;
+  margin-top: 5px;
+  display: block;
+}
+
+button.button,
+a.button,
+input.button {
+  padding: 15px 20px;
+  background-color: #e5e5e5;
+  -webkit-appearance: none;
+  border: 0;
+  width: 50%;
+  align-self: center;
+  transition: all 0.3s ease-in-out;
+  color: #141414;
+  outline: none;
+  text-decoration: none;
+  text-align: center;
+}
+button.button:hover,
+a.button:hover,
+input.button:hover {
+  cursor: pointer;
+}
+button.button:hover:hover,
+a.button:hover:hover,
+input.button:hover:hover {
+  background-color: rgba(167, 167, 167, 0.64);
+}
+button.button:disabled, button.button.disabled,
+a.button:disabled,
+a.button.disabled,
+input.button:disabled,
+input.button.disabled {
+  color: rgba(167, 167, 167, 0.64);
+}
+button.button:disabled:hover, button.button.disabled:hover,
+a.button:disabled:hover,
+a.button.disabled:hover,
+input.button:disabled:hover,
+input.button.disabled:hover {
+  cursor: not-allowed;
+  background-color: #e5e5e5;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 30%;
+}
+
+.page-home {
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+.page-home.active {
+  display: block;
+}
+.page-home header {
+  height: auto;
+  width: 100%;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 4px;
+}
+.page-home main {
+  margin-top: 40px;
+  width: 100%;
+}
+.page-home main .table {
+  width: 100%;
+  border-spacing: 0;
+}
+.page-home main .table thead tr th {
+  text-align: start;
+  padding: 20px;
+  background-color: #f5f5f5;
+  font-weight: 400;
+}
+.page-home main .table tbody tr:nth-child(even) {
+  background-color: #e5e5e5;
+}
+.page-home main .table tbody tr td {
+  padding: 20px;
+}
+.page-home main .table tbody tr td a {
+  color: #141414;
+  transition: color 0.2s ease-in-out;
+}
+.page-home main .table tbody tr td a:hover {
+  color: #7d7d7d;
+}
+.page-home main .table tbody tr td:nth-child(2) {
+  text-align: end;
+}
+.page-home main .table tbody tr td:nth-child(2) button {
+  padding: 10px;
+  outline: none;
+  background: transparent;
+  -webkit-appearance: none;
+  border: 0;
+  font-size: 20px;
+  transition: all 0.2s ease-in-out;
+}
+.page-home main .table tbody tr td:nth-child(2) button:hover {
+  cursor: pointer;
+  color: #7d7d7d;
+}
+.page-home main footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  border-top: 1px solid #f5f5f5;
+  padding-top: 20px;
+}
+.page-home main footer .pagination {
+  display: flex;
+  align-items: center;
+}
+.page-home main footer .pagination .button {
+  width: auto;
+  padding: 10px;
+}
+.page-home main footer .pagination .button:first-child {
+  margin-right: 10px;
+}
+.page-home main footer .pagination .button:last-child {
+  margin-left: 10px;
+}
+.page-home main footer .pagination .pagination-items {
+  display: flex;
+}
+.page-home main footer .pagination .pagination-items a {
+  display: block;
+  width: 30px;
+  text-align: center;
+  color: #141414;
+  text-decoration: none;
+}
+
+.page-complete {
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+.page-complete.active {
+  display: flex;
+}
+.page-complete h2 {
+  margin-bottom: 10px;
+}
+.page-complete .actions {
+  margin-top: 30px;
+}
+
+/*# sourceMappingURL=app.css.map */

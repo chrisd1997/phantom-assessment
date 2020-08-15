@@ -1,0 +1,23 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+// Globals
+$muted: #e5e5e5;
+$muted_05: rgba(167, 167, 167, 0.64);
+$gray: #f5f5f5;
+$black: #000;
+$text: #141414;
+$text_hover: #7d7d7d;
+$red: #db1717;
+
+// Reset
+@import 'reset';
+
+// Components
+@import 'components/form';
+@import 'components/buttons';
+@import 'components/wrapper';
+
+// Pages
+@import 'pages/home';
+@import 'pages/thanks';
