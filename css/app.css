@@ -144,6 +144,9 @@ input.button.disabled:hover {
   font-size: 20px;
   transition: all 0.2s ease-in-out;
 }
+.page-home main .table tbody tr td:nth-child(2) button i {
+  pointer-events: none;
+}
 .page-home main .table tbody tr td:nth-child(2) button:hover {
   cursor: pointer;
   color: #7d7d7d;

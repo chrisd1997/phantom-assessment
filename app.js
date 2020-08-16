@@ -1,7 +1,7 @@
-/** @type {Array<String>} We save the exiting bookmarks in a variable */
-let existingUrls = JSON.parse(localStorage.getItem('bookmarks')) || [];
+/** @type {Array<(String|null)>|null} We save the exiting bookmarks in a variable */
+let existingUrls = JSON.parse(window.localStorage.getItem('bookmarks')) || [];
 
-/** @type {Number} We also calculate the pages and store that in a variable */
+/** @type {Number|null} We also calculate the pages and store that in a variable */
 let pages =
     existingUrls.length > 20
         ? Math.ceil(existingUrls.length / 20)
@@ -170,10 +170,10 @@ const renderBookmarkList = () => {
 
                 const actions = document.createElement('td');
                 actions.innerHTML =
-                    '<button type="button" onclick="editBookmark(' + index + ')">' +
+                    '<button type="button" class="edit-button" data-id="' + index + '">' +
                     '<i class="fal fa-pencil-alt"></i>' +
                     '</button>' +
-                    '<button type="button" onclick="removeBookmark(' + index + ')">' +
+                    '<button type="button" class="delete-button" data-id="' + index + '">' +
                     '<i class="fal fa-trash-alt"></i>' +
                     '</button>';
 
@@ -230,6 +230,7 @@ const renderBookmarkList = () => {
 const renderPagination = () => {
     if (existingUrls.length) {
         const paginationWrapper = document.getElementsByClassName('pagination-items')[0];
+        paginationWrapper.innerHTML = '';
 
         for (let x = 1; x <= pages; x++) {
             const paginationItem = document.createElement('a');
@@ -267,8 +268,8 @@ const showThanksPage = () => {
  * @param {!Array<String>} bookmarks
  */
 const storeBookmarks = (bookmarks) => {
-    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-    existingUrls = JSON.parse(localStorage.getItem('bookmarks')) || [];
+    window.localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    existingUrls = JSON.parse(window.localStorage.getItem('bookmarks')) || [];
     pages =
         existingUrls.length > 20
             ? Math.ceil(existingUrls.length / 20)
@@ -276,14 +277,36 @@ const storeBookmarks = (bookmarks) => {
 }
 
 (() => {
+    /** @type {HTMLElement} **/
+    const urlField = document.getElementById('url');
 
     // Listen for the submit of the add-form
     document.getElementById('add-form').addEventListener('submit', addBookmark);
+
+    // Listen for the blur and keyup events on the input field
+    urlField.addEventListener('blur', (e) => {
+        validateField(e.target);
+        e.target.setAttribute('data-mode', 'new');
+        e.target.removeAttribute('data-edit-id');
+    });
+    urlField.addEventListener('keyup', (e) => validateField(e.target));
 
     // Render the pagination items
     renderPagination();
 
     // Render the bookmark list
     renderBookmarkList();
+
+    // Listen for all click events to make sure we capture the dynamic elements
+    document.addEventListener('click', (e) => {
+        // Listen for the click on the edit action
+        if (e.target && e.target.classList.contains('edit-button')) {
+            editBookmark(parseInt(e.target.dataset.id));
+        }
+        // Listen for the click on the delete action
+        else if (e.target && e.target.classList.contains('delete-button')) {
+            removeBookmark(parseInt(e.target.dataset.id));
+        }
+    });
 
 })();
