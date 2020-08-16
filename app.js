@@ -89,7 +89,7 @@ const addBookmark = (e) => {
     }
 
     storeBookmarks(newBookmarks);
-    showThanksPage();
+    showThanksPage(urlField.value);
 };
 
 /**
@@ -267,14 +267,15 @@ const renderPagination = () => {
  * adds the last added bookmark
  * in the thank you message
  *
+ * @param {!String} bookmark
  */
-const showThanksPage = () => {
+const showThanksPage = (bookmark) => {
     const homePage = document.getElementsByClassName('page-home')[0];
     const thanksPage = document.getElementsByClassName('page-complete')[0];
 
     homePage.classList.remove('active');
     thanksPage.querySelector('#bookmark-submission')
-        .innerText = `Your bookmark "${existingUrls.slice(-1)}" has been added successfully!`;
+        .innerText = `Your bookmark "${bookmark}" has been added successfully!`;
     thanksPage.classList.add('active');
 };
 
