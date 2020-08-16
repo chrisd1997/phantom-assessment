@@ -78,10 +78,12 @@ const addBookmark = (e) => {
     const urlField = e.target.querySelector('input[type="url"]');
     const newBookmarks = existingUrls;
 
+    console.log(urlField.getAttribute('data-edit-id'));
+
     if (
         urlField.getAttribute('data-mode') === 'edit' &&
-        urlField.getAttribute('data-edit-id') !== undefined) {
-        newBookmarks[urlField.getAttribute('data-edit-id')] = urlField.value;
+        urlField.getAttribute('data-edit-id') !== '') {
+        newBookmarks[parseInt(urlField.getAttribute('data-edit-id'))] = urlField.value;
     } else {
         newBookmarks.push(urlField.value);
     }
@@ -107,6 +109,19 @@ const validURL = (str) => {
 };
 
 /**
+ * Reset the form back to its original state
+ *
+ * @param {!HTMLElement} urlField
+ */
+const resetForm = (urlField) => {
+    urlField.setAttribute('data-mode', 'new');
+    urlField.removeAttribute('data-edit-id');
+    document.getElementsByClassName('cancel-edit')[0].classList.remove('show');
+    urlField.value = '';
+    document.querySelector('button[type="submit"]').disabled = true;
+};
+
+/**
  * Edit a bookmark by its index.
  * Clicking on the pencil will
  * set the field in "edit mode"
@@ -123,6 +138,7 @@ const editBookmark = (index) => {
         urlField.setAttribute('data-mode', 'edit');
         urlField.setAttribute('data-edit-id', index.toString());
         urlField.focus();
+        document.getElementsByClassName('cancel-edit')[0].classList.add('show');
     }
 };
 
@@ -135,9 +151,11 @@ const editBookmark = (index) => {
  */
 const removeBookmark = (index) => {
     if (existingUrls.length) {
-        storeBookmarks(existingUrls.filter((_, i) => i !== index));
-        renderBookmarkList();
-        renderPagination();
+        if (confirm('Are you sure that you want to remove this bookmark?') === true) {
+            storeBookmarks(existingUrls.filter((_, i) => i !== index));
+            renderBookmarkList();
+            renderPagination();
+        }
     }
 };
 
@@ -284,11 +302,7 @@ const storeBookmarks = (bookmarks) => {
     document.getElementById('add-form').addEventListener('submit', addBookmark);
 
     // Listen for the blur and keyup events on the input field
-    urlField.addEventListener('blur', (e) => {
-        validateField(e.target);
-        e.target.setAttribute('data-mode', 'new');
-        e.target.removeAttribute('data-edit-id');
-    });
+    urlField.addEventListener('blur', (e) => validateField(e.target));
     urlField.addEventListener('keyup', (e) => validateField(e.target));
 
     // Render the pagination items
@@ -306,6 +320,10 @@ const storeBookmarks = (bookmarks) => {
         // Listen for the click on the delete action
         else if (e.target && e.target.classList.contains('delete-button')) {
             removeBookmark(parseInt(e.target.dataset.id));
+        }
+        // Listen for the click on the cancel edit button
+        else if (e.target && e.target.classList.contains('cancel-edit')) {
+            resetForm(urlField);
         }
     });
 

@@ -13,6 +13,27 @@
     background-color: $gray;
     padding: 20px;
     border-radius: 4px;
+    position: relative;
+
+    .cancel-edit {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: transparent;
+      outline: none;
+      -webkit-appearance: none;
+      border: 0;
+      color: $red;
+      display: none;
+
+      &.show {
+        display: block;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 
   main {

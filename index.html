@@ -12,6 +12,7 @@
             <div class="page-home active">
                 <header>
                     <form method="post" id="add-form">
+                        <button type="button" class="cancel-edit">Cancel editing</button>
                         <div class="form-group">
                             <label for="url">URL</label>
                             <input
@@ -19,6 +20,7 @@
                                     id="url"
                                     placeholder="https://example.com"
                                     data-mode="new"
+                                    data-edit-id=""
                             />
                             <span class="error-field"></span>
                         </div>

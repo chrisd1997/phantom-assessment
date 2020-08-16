@@ -104,6 +104,24 @@ input.button.disabled:hover {
   background-color: #f5f5f5;
   padding: 20px;
   border-radius: 4px;
+  position: relative;
+}
+.page-home header .cancel-edit {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  outline: none;
+  -webkit-appearance: none;
+  border: 0;
+  color: #db1717;
+  display: none;
+}
+.page-home header .cancel-edit.show {
+  display: block;
+}
+.page-home header .cancel-edit:hover {
+  cursor: pointer;
 }
 .page-home main {
   margin-top: 40px;
