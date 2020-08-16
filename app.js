@@ -16,11 +16,25 @@ let pages =
  * @param {!HTMLInputElement} el
  */
 const validateField = (el) => {
+    /** @type {String} */
+    const bookmarkId = el.getAttribute('data-edit-id');
+    let selectedBookmark = null;
+
+    if (bookmarkId !== '' && bookmarkId !== null) {
+        selectedBookmark = existingUrls.filter((_, index) => index === parseInt(bookmarkId))[0];
+    }
+
     if (!el.value.length) {
         setFieldError(el, 'This field cannot be empty');
     } else if (!validURL(el.value)) {
         setFieldError(el, 'Please provide a valid URL');
-    } else if (el.getAttribute('data-mode') !== 'edit' && existingUrls.includes(el.value)) {
+    } else if (
+        !selectedBookmark &&
+        existingUrls.includes(el.value) ||
+
+        selectedBookmark &&
+        el.value !== selectedBookmark &&
+        existingUrls.includes(el.value)) {
         setFieldError(el, 'URL is already bookmarked');
     } else {
         setFieldError(el, null);
@@ -35,6 +49,7 @@ const validateField = (el) => {
  * @param {?String} error
  */
 const setFieldError = (el, error) => {
+    /** @type {HTMLElement} */
     const errorField = el.parentNode.querySelector('.error-field');
 
     if (error && error.length) {
@@ -56,7 +71,10 @@ const validateForm = (el) => {
     const form = el.parentNode.parentNode;
 
     if (form.tagName.toLowerCase() === 'form') {
+        /** @type {Boolean} */
         let valid = true;
+
+        /** @type {HTMLButtonElement} */
         const submitButton = form.querySelector('button[type="submit"]');
 
         form.querySelectorAll('input').forEach((input) => {
@@ -75,14 +93,14 @@ const validateForm = (el) => {
  */
 const addBookmark = (e) => {
     e.preventDefault();
+    /** @type {HTMLInputElement} */
     const urlField = e.target.querySelector('input[type="url"]');
+    /** @type {String} */
+    const bookmarkId = urlField.getAttribute('data-edit-id');
+    /** @type {Array<String>} */
     const newBookmarks = existingUrls;
 
-    console.log(urlField.getAttribute('data-edit-id'));
-
-    if (
-        urlField.getAttribute('data-mode') === 'edit' &&
-        urlField.getAttribute('data-edit-id') !== '') {
+    if (bookmarkId !== '' && bookmarkId !== null) {
         newBookmarks[parseInt(urlField.getAttribute('data-edit-id'))] = urlField.value;
     } else {
         newBookmarks.push(urlField.value);
@@ -114,7 +132,6 @@ const validURL = (str) => {
  * @param {!HTMLElement} urlField
  */
 const resetForm = (urlField) => {
-    urlField.setAttribute('data-mode', 'new');
     urlField.removeAttribute('data-edit-id');
     document.getElementsByClassName('cancel-edit')[0].classList.remove('show');
     urlField.value = '';
@@ -135,7 +152,6 @@ const editBookmark = (index) => {
     if (bookmark) {
         const urlField = document.getElementById('url');
         urlField.value = bookmark;
-        urlField.setAttribute('data-mode', 'edit');
         urlField.setAttribute('data-edit-id', index.toString());
         urlField.focus();
         document.getElementsByClassName('cancel-edit')[0].classList.add('show');
@@ -166,19 +182,26 @@ const removeBookmark = (index) => {
  *
  */
 const renderBookmarkList = () => {
+    /** @type {HTMLElement} */
     const tableEl = document.getElementsByTagName('table')[0];
     tableEl.querySelector('tbody').innerHTML = '';
 
     if (existingUrls.length) {
+        /** @type {URLSearchParams} */
         const urlParams = new URLSearchParams(window.location.search);
+        /** @type {Number} */
         const currentPage = parseInt(urlParams.get('page')) || 1;
+        /** @type {Number} */
         const pagination = currentPage * 20;
 
         existingUrls
             .slice(pagination === 20 ? 0 : (pagination - 20), pagination)
             .forEach((bookmark, index) => {
+                /** @type {HTMLElement} */
                 const row = document.createElement('tr');
+                /** @type {HTMLElement} */
                 const url = document.createElement('td');
+                /** @type {HTMLElement} */
                 const link = document.createElement('a');
 
                 link.href = bookmark.toString();
@@ -186,6 +209,7 @@ const renderBookmarkList = () => {
                 link.appendChild(document.createTextNode(bookmark));
                 url.appendChild(link);
 
+                /** @type {HTMLElement} */
                 const actions = document.createElement('td');
                 actions.innerHTML =
                     '<button type="button" class="edit-button" data-id="' + index + '">' +
@@ -206,7 +230,9 @@ const renderBookmarkList = () => {
         document.getElementById('counter')
             .innerText = 'Showing ' + (pagination - 20) + ' - ' + pagination;
 
+        /** @type {HTMLElement} */
         const prevButton = document.getElementById('prevPage');
+        /** @type {HTMLElement} */
         const nextButton = document.getElementById('nextPage');
 
         if (currentPage === 1) {
@@ -227,10 +253,14 @@ const renderBookmarkList = () => {
             nextButton.href = '#';
         }
     } else {
+        /** @type {HTMLElement} */
         const row = document.createElement('tr');
 
+        /** @type {HTMLElement} */
         const textNode = document.createElement('td');
         textNode.appendChild(document.createTextNode('No bookmarks available. Go add some!'));
+
+        /** @type {HTMLElement} */
         const emptyNode = document.createElement('td');
 
         row.appendChild(textNode);
@@ -247,13 +277,16 @@ const renderBookmarkList = () => {
  */
 const renderPagination = () => {
     if (existingUrls.length) {
+        /** @type {Element} */
         const paginationWrapper = document.getElementsByClassName('pagination-items')[0];
         paginationWrapper.innerHTML = '';
 
         for (let x = 1; x <= pages; x++) {
+            /** @type {HTMLElement} */
             const paginationItem = document.createElement('a');
             paginationItem.href = '?page=' + x;
 
+            /** @type {Text} */
             const paginationText = document.createTextNode(x.toString());
             paginationItem.appendChild(paginationText);
 
@@ -270,7 +303,9 @@ const renderPagination = () => {
  * @param {!String} bookmark
  */
 const showThanksPage = (bookmark) => {
+    /** @type {Element} */
     const homePage = document.getElementsByClassName('page-home')[0];
+    /** @type {Element} */
     const thanksPage = document.getElementsByClassName('page-complete')[0];
 
     homePage.classList.remove('active');
